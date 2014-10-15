@@ -29,12 +29,12 @@ class caseSetup():
             exit()
 
         if templatePath is None:
-            self.templatePath = os.path.dirname(__file__)+'/../data/template'
+            self.templatePath = os.path.dirname(__file__)+'/data/template'
             print 'Template File Path is: {0}'.format(self.templatePath)
 
         if geometryPath is None:
             ## Default to the base geometry
-            geometryPath = os.path.dirname(__file__)+'/../data/geometries/benchmarkAircraft.stl'
+            geometryPath = os.path.dirname(__file__)+'/data/geometries/benchmarkAircraft.stl'
 
         ## Since the path exists, lets make sure that folder doesn't exist
         #TODO: Don't just delete a folder without asking for permission

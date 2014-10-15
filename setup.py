@@ -4,11 +4,18 @@ from codecs import open # To use a consistent encoding
 from os import path, walk
 
 here = path.abspath(path.dirname(__file__))
-datadir = 'data'
+datadir = 'droneCFD/data'
 package_data = [ (d, [path.join(d, f) for f in files]) for d,folders,files in walk(datadir)]
+print package_data
+data_files=[]
+for i in package_data:
+    for j in i[1]:
+        data_files.append(j)
+data_files = [path.relpath(file, datadir) for file in data_files]
+# print files
 setup(
 name='droneCFD',
-version='0.1.1',
+version='0.1.1a',
 description='A virtual wind tunnel based on OpenFOAM and PyFOAM',
 long_description='Please see dronecfd.com for more information',
 url='http://www.dronecfd.com',
@@ -28,10 +35,9 @@ classifiers=[
 ],
 keywords='cfd wind tunnel uav uas suas',
 install_requires=['XlsxWriter', 'numpy'],
-packages=['droneCFD'],
+packages=find_packages(),
 zip_safe = False,
-package_dir={'droneCFD': 'droneCFD'},
-data_files=package_data,
+package_data={"droneCFD.data":data_files,},
 scripts=['droneCFD/scripts/dcCheck', 'droneCFD/scripts/dcRun', 'droneCFD/scripts/dcPostProcess']
 # To provide executable scripts, use entry points in preference to the
 # "scripts" keyword. Entry points provide cross-platform support and allow
