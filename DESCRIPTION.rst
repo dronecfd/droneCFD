@@ -1,1 +1,1 @@
-DroneCFD was born from the frustrations caused by the difficuly of numerically simulating a small unmanned aircraft. It was developed using freely available code, so anyone can access the technology. DroneCFD requires only an STL file of a small unmanned aircraft. With a single command line call, and some patience, a user can see the lift and drag performance of the geometry.
+

@@ -4,16 +4,13 @@ from codecs import open # To use a consistent encoding
 from os import path, walk
 
 here = path.abspath(path.dirname(__file__))
-# Get the long description from the relevant file
-with open(path.join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
-    long_description = f.read()
 datadir = 'data'
 package_data = [ (d, [path.join(d, f) for f in files]) for d,folders,files in walk(datadir)]
 setup(
 name='droneCFD',
 version='0.1.0',
 description='A virtual wind tunnel based on OpenFOAM and PyFOAM',
-long_description=long_description,
+long_description='Please see dronecfd.com for more information',
 url='http://www.dronecfd.com',
 # Author details
 author='Chris Paulson',
