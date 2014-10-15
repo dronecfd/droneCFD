@@ -1,0 +1,45 @@
+/*--------------------------------------------------------------------------------*\
+ _______  .______        ______   .__   __.  _______      ______  _______  _______
+|       \ |   _  \      /  __  \  |  \ |  | |   ____|    /      ||   ____||       \
+|  .--.  ||  |_)  |    |  |  |  | |   \|  | |  |__      |  ,----'|  |__   |  .--.  |
+|  |  |  ||      /     |  |  |  | |  . `  | |   __|     |  |     |   __|  |  |  |  |
+|  '--'  ||  |\  \----.|  `--'  | |  |\   | |  |____    |  `----.|  |     |  '--'  |
+|_______/ | _| `._____| \______/  |__| \__| |_______|    \______||__|     |_______/
+
+\*--------------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    object      U;
+}
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform (15 0 0);
+
+boundaryField
+{
+inlet
+{
+    type  fixedValue;
+    value $internalField;
+}
+
+    outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform (0 0 0);
+        value           $internalField;
+    }
+    walls
+    {
+        type            slip;
+    }
+    Aircraft
+    {
+        type fixedValue;
+        value uniform (0 0 0);
+    }
+}

@@ -1,0 +1,5 @@
+include droneCFD/*.py
+recursive-include data *
+recursive-include data/0 *
+recursive-include data/system *
+recursive-include data/constant *

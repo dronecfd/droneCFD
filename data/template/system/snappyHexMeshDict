@@ -1,0 +1,130 @@
+/*--------------------------------------------------------------------------------*\
+ _______  .______        ______   .__   __.  _______      ______  _______  _______
+|       \ |   _  \      /  __  \  |  \ |  | |   ____|    /      ||   ____||       \
+|  .--.  ||  |_)  |    |  |  |  | |   \|  | |  |__      |  ,----'|  |__   |  .--.  |
+|  |  |  ||      /     |  |  |  | |  . `  | |   __|     |  |     |   __|  |  |  |  |
+|  '--'  ||  |\  \----.|  `--'  | |  |\   | |  |____    |  `----.|  |     |  '--'  |
+|_______/ | _| `._____| \______/  |__| \__| |_______|    \______||__|     |_______/
+                                                                                    
+\*--------------------------------------------------------------------------------*/
+FoamFile
+    {
+        version 2.0;
+        format ascii;
+        class dictionary;
+        location system;
+        object snappyHexMeshDict;
+    }
+    nFeatureSnapIter 5;
+    implicitFeatureSnap false;
+    explicitFeatureSnap true;
+    multiRegionFeatureSnap false;
+    castellatedMesh true;
+    snap true;
+    addLayers true;
+    geometry
+    {
+        Aircraft.stl
+        {
+            type triSurfaceMesh;
+            name Aircraft;
+        }
+    }
+
+    castellatedMeshControls
+    {
+        features
+            (
+                {
+                    file "Aircraft.eMesh";
+                    level 9;
+                }
+            );
+        refinementSurfaces
+            {
+                Aircraft
+                {
+                    level ( 6 8 );
+                }
+
+            }
+
+        refinementRegions
+        {
+
+            Aircraft
+                {
+                    mode distance;
+                    levels ((0.05 6) (0.15 5) (0.5 4) (1.5 3));
+                }
+
+        }
+
+        locationInMesh ( 1 0.5 0.0134 );
+        maxLocalCells 100000;
+        maxGlobalCells 20000000;
+        minRefinementCells 20;
+        nCellsBetweenLevels 4;
+        resolveFeatureAngle 30;
+        allowFreeStandingZoneFaces false;
+        maxLoadUnbalance 0.1;
+    }
+
+    snapControls
+        {
+            nSolveIter 30;
+            nSmoothPatch 6;
+            tolerance 4.0;
+            nRelaxIter 5;
+            nFeatureSnapIter 20;
+        }
+
+addLayersControls
+    {
+        relativeSizes true;
+        layers
+            {
+                Aircraft
+                {
+                    nSurfaceLayers 5;
+                }
+            }
+        expansionRatio 1.5;
+        finalLayerThickness 0.15;
+        minThickness 0.05;
+        nGrow 0;
+        featureAngle 180;
+        nRelaxIter 5;
+        nSmoothSurfaceNormals 20;
+        nSmoothNormals 20;
+        nSmoothThickness 20;
+        maxFaceThicknessRatio 0.8;
+        maxThicknessToMedialRatio 0.9;
+        minMedianAxisAngle 90;
+        nBufferCellsNoExtrude 0;
+        nLayerIter 20;
+    }
+
+meshQualityControls
+    {
+
+        maxNonOrtho 65;
+        maxBoundarySkewness 20;
+        maxInternalSkewness 4;
+        maxConcave 80;
+        minVol 1e-13;
+        minTetQuality 1e-15;
+        minArea -1;
+        minTwist 0.02;
+        minDeterminant 0.001;
+        minFaceWeight 0.05;
+        minVolRatio 0.01;
+        minTriangleTwist -1;
+        nSmoothScale 4;
+        errorReduction 0.75;
+
+    }
+
+    debug 0;
+    mergeTolerance 1E-6;
+    autoBlockMesh false;

@@ -1,0 +1,54 @@
+#!/usr/bin/python
+##########################################################################################
+##  _______  .______        ______   .__   __.  _______      ______  _______  _______   ##
+## |       \ |   _  \      /  __  \  |  \ |  | |   ____|    /      ||   ____||       \  ##
+## |  .--.  ||  |_)  |    |  |  |  | |   \|  | |  |__      |  ,----'|  |__   |  .--.  | ##
+## |  |  |  ||      /     |  |  |  | |  . `  | |   __|     |  |     |   __|  |  |  |  | ##
+## |  '--'  ||  |\  \----.|  `--'  | |  |\   | |  |____    |  `----.|  |     |  '--'  | ##
+## |_______/ | _| `._____| \______/  |__| \__| |_______|    \______||__|     |_______/  ##
+##                                                                                      ##
+##########################################################################################
+__author__ = 'chrispaulson'
+
+import argparse
+from droneCFD import Utilities
+from droneCFD import stlTools
+from droneCFD import Meshing
+from droneCFD import Solver
+from droneCFD import PostProcessing
+ 
+parser = argparse.ArgumentParser(description='Run cfd simulations around a small unmanned aircraft.')
+parser.add_argument('--caseFolder', default='DroneCFDSimulation', help='The directory used to store all the simulations.')
+parser.add_argument('--templatePath', default=None, help='Template path to use, for advanced users only.')
+parser.add_argument('--geometryPath', default=None, help='Path to the STL geometry, if omitted, the reference geometry is used.')
+parser.add_argument('--resolution', default='medium', choices=['high', 'medium', 'low'], help='Resolution of the CFD evaluation. The default value is medium.')
+parser.add_argument('--aoa', nargs='+', type=float, default=[0.0], help='Angles of attack used in simulations. Default is 0.0')
+parser.add_argument('--airspeed', nargs='+', type=float, default=15.0, help='Airspeed in the domain.')
+parser.add_argument('--cofg', nargs='+', type=float, default=0.0, help='The X position of the Center of Gravity (cog) as measured from the nose.')
+parser.add_argument('--refarea', nargs='+', type=float, default=1.0, help='The reference area of the wing being simulated, used for force coefficient calcuations')
+parser.add_argument('--convergence', type=float, default=1e-6, help='Convergence value to terminate the simulation.')
+parser.add_argument('--preview', choices=['full', 'final', 'none'], default='none', help='Controls Paraview previews of the simulation.')
+args = parser.parse_args()
+print args
+
+for aoa in args.aoa:
+    case = Utilities.caseSetup('{0}/aoa_{1}'.format(args.caseFolder, aoa), parserArgs=args)
+
+    model = stlTools.SolidSTL(case.stlPath)
+    model.setaoa(aoa, units='degrees')
+    model.saveSTL(case.stlPath)
+
+
+    bcs = {'high':0.15, 'medium':0.3001, 'low':0.45}
+    mesh = Meshing.mesher(case.dir, model, baseCellSize=bcs[args.resolution], parserArgs=args)
+    mesh.blockMesh()
+    mesh.snappyHexMesh()
+
+    if args.preview=='full':
+        mesh.previewMesh()
+
+    solver = Solver.solver(case.dir, parserArgs=args)
+
+    if args.preview=='full' or args.preview=='final':
+        mesh.previewMesh()
+post = PostProcessing.PostProcessing(args.caseFolder)

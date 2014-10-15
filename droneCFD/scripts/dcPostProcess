@@ -1,0 +1,21 @@
+#!/usr/bin/python
+##########################################################################################
+##  _______  .______        ______   .__   __.  _______      ______  _______  _______   ##
+## |       \ |   _  \      /  __  \  |  \ |  | |   ____|    /      ||   ____||       \  ##
+## |  .--.  ||  |_)  |    |  |  |  | |   \|  | |  |__      |  ,----'|  |__   |  .--.  | ##
+## |  |  |  ||      /     |  |  |  | |  . `  | |   __|     |  |     |   __|  |  |  |  | ##
+## |  '--'  ||  |\  \----.|  `--'  | |  |\   | |  |____    |  `----.|  |     |  '--'  | ##
+## |_______/ | _| `._____| \______/  |__| \__| |_______|    \______||__|     |_______/  ##
+##                                                                                      ##
+##########################################################################################
+__author__ = 'chrispaulson'
+
+from droneCFD import PostProcessing
+import argparse
+
+parser = argparse.ArgumentParser(description='Run cfd simulations around a small unmanned aircraft.')
+parser.add_argument('--caseFolder', default='DroneCFDSimulation', help='The directory used to store all the simulations.')
+parser.add_argument('--preview', choices=['full', 'final', 'none'], default='none', help='Controls Paraview previews of the simulation.')
+args = parser.parse_args()
+
+post = PostProcessing.PostProcessing(args.caseFolder)

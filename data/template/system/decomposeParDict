@@ -1,0 +1,58 @@
+/*--------------------------------------------------------------------------------*\
+ _______  .______        ______   .__   __.  _______      ______  _______  _______
+|       \ |   _  \      /  __  \  |  \ |  | |   ____|    /      ||   ____||       \
+|  .--.  ||  |_)  |    |  |  |  | |   \|  | |  |__      |  ,----'|  |__   |  .--.  |
+|  |  |  ||      /     |  |  |  | |  . `  | |   __|     |  |     |   __|  |  |  |  |
+|  '--'  ||  |\  \----.|  `--'  | |  |\   | |  |____    |  `----.|  |     |  '--'  |
+|_______/ | _| `._____| \______/  |__| \__| |_______|    \______||__|     |_______/
+
+\*--------------------------------------------------------------------------------*/
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+
+    root            "/home/penfold/mattijs/foam/mattijs2.1/run/icoFoam";
+    case            "cavity";
+    instance        "system";
+    local           "";
+
+    class           dictionary;
+    object          decomposeParDict;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+numberOfSubdomains 4;
+method  scotch;
+
+//method          hierarchical;
+//method          metis;
+//method          parMetis;
+
+simpleCoeffs
+{
+    n               (2 2 2);
+    delta           0.001;
+}
+
+hierarchicalCoeffs
+{
+    n               (2 2 2);
+    delta           0.001;
+    order           xyz;
+}
+
+manualCoeffs
+{
+    dataFile        "cellDecomposition";
+}
+
+metisCoeffs
+{
+    //n                   (5 1 1);
+    //cellWeightsFile     "constant/cellWeightsFile";
+}
+
+
+// ************************************************************************* //

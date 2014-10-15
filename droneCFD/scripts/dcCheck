@@ -1,0 +1,82 @@
+#!/usr/bin/python
+##########################################################################################
+##  _______  .______        ______   .__   __.  _______      ______  _______  _______   ##
+## |       \ |   _  \      /  __  \  |  \ |  | |   ____|    /      ||   ____||       \  ##
+## |  .--.  ||  |_)  |    |  |  |  | |   \|  | |  |__      |  ,----'|  |__   |  .--.  | ##
+## |  |  |  ||      /     |  |  |  | |  . `  | |   __|     |  |     |   __|  |  |  |  | ##
+## |  '--'  ||  |\  \----.|  `--'  | |  |\   | |  |____    |  `----.|  |     |  '--'  | ##
+## |_______/ | _| `._____| \______/  |__| \__| |_______|    \______||__|     |_______/  ##
+##                                                                                      ##
+##########################################################################################
+__author__ = 'chrispaulson'
+
+import os
+
+def which(program):
+    ## Taken from harmv's stackoverflow answer (http://stackoverflow.com/questions/377017/test-if-executable-exists-in-python)
+    def is_exe(fpath):
+        return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if is_exe(program):
+            return program
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            path = path.strip('"')
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file):
+                return exe_file
+
+    return None
+
+error = False
+
+print 'Checking for droneCFD'
+try:
+    import droneCFD
+except:
+    print 'droneCFD NOT found, please check your droneCFD installation'
+    error = True
+
+print 'Checking for blockMesh'
+if which('blockMesh'):
+    print 'blockMesh Found!'
+else:
+    print 'blockMesh NOT found, please check your OpenFOAM installation'
+    error = True
+
+print 'Checking for decomposePar'
+if which('decomposePar'):
+    print 'decomposePar Found!'
+else:
+    print 'decompsePar NOT found, please check your OpenFOAM installation'
+    error = True
+
+print 'Checking for simpleFoam'
+if which('simpleFoam'):
+    print 'simpleFoam Found!'
+else:
+    print 'simpleFoam NOT found, please check your OpenFOAM installation'
+    error = True
+
+print 'Checking for paraview'
+if which('paraview'):
+    print 'paraview Found!'
+else:
+    print 'paraview NOT found, please check your paraview installation'
+    error = True
+
+try:
+    import PyFoam
+except:
+    error = True
+    print 'Could not import PyFoam, please check your installation'
+else:
+    print 'PyFoam Found!'
+
+if error:
+    print 'Errors were encountered in the check, droneCFD will NOT work properly. Please check your OpenFOAM install, PyFoam install and .bashrc configuration. If problems persist, please ask for help in the dronecfd.com forum'
+
+else:
+    print 'Everything looks great! Try running a simulation!'

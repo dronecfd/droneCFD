@@ -1,0 +1,45 @@
+/*--------------------------------------------------------------------------------*\
+ _______  .______        ______   .__   __.  _______      ______  _______  _______
+|       \ |   _  \      /  __  \  |  \ |  | |   ____|    /      ||   ____||       \
+|  .--.  ||  |_)  |    |  |  |  | |   \|  | |  |__      |  ,----'|  |__   |  .--.  |
+|  |  |  ||      /     |  |  |  | |  . `  | |   __|     |  |     |   __|  |  |  |  |
+|  '--'  ||  |\  \----.|  `--'  | |  |\   | |  |____    |  `----.|  |     |  '--'  |
+|_______/ | _| `._____| \______/  |__| \__| |_______|    \______||__|     |_______/
+
+\*--------------------------------------------------------------------------------*/
+FoamFile
+{
+version 2.0;
+format ascii;
+class volScalarField;
+object omega;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+dimensions [0 0 -1 0 0 0 0];
+turbulentOmega 1.78;
+internalField uniform $turbulentOmega;
+boundaryField
+{
+    inlet
+    {
+        type fixedValue;
+        value $internalField;
+    }
+    outlet
+    {
+        type inletOutlet;
+        inletValue $internalField;
+        value $internalField;
+    }
+    walls
+    {
+        type omegaWallFunction;
+        value $internalField;
+    }
+    Aircraft
+    {
+        type omegaWallFunction;
+        value $internalField;
+    }
+}

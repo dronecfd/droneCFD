@@ -1,0 +1,48 @@
+/*--------------------------------------------------------------------------------*\
+ _______  .______        ______   .__   __.  _______      ______  _______  _______
+|       \ |   _  \      /  __  \  |  \ |  | |   ____|    /      ||   ____||       \
+|  .--.  ||  |_)  |    |  |  |  | |   \|  | |  |__      |  ,----'|  |__   |  .--.  |
+|  |  |  ||      /     |  |  |  | |  . `  | |   __|     |  |     |   __|  |  |  |  |
+|  '--'  ||  |\  \----.|  `--'  | |  |\   | |  |____    |  `----.|  |     |  '--'  |
+|_______/ | _| `._____| \______/  |__| \__| |_______|    \______||__|     |_______/
+
+\*--------------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      epsilon;
+}
+
+dimensions      [0 2 -3 0 0 0 0];
+
+internalField   uniform 1.8239;
+
+boundaryField
+{
+
+    inlet
+    {
+        type fixedValue;
+        value $internalField;
+    }
+
+    outlet
+    {
+        type fixedValue;
+        value $internalField;
+    }
+
+    walls
+    {
+        type            epsilonWallFunction;
+	    value $internalField;
+    }
+
+    Aircraft
+    {
+        type            epsilonWallFunction;
+	    value $internalField;
+    }
+}

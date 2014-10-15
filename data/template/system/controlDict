@@ -1,0 +1,98 @@
+/*--------------------------------------------------------------------------------*\
+ _______  .______        ______   .__   __.  _______      ______  _______  _______
+|       \ |   _  \      /  __  \  |  \ |  | |   ____|    /      ||   ____||       \
+|  .--.  ||  |_)  |    |  |  |  | |   \|  | |  |__      |  ,----'|  |__   |  .--.  |
+|  |  |  ||      /     |  |  |  | |  . `  | |   __|     |  |     |   __|  |  |  |  |
+|  '--'  ||  |\  \----.|  `--'  | |  |\   | |  |____    |  `----.|  |     |  '--'  |
+|_______/ | _| `._____| \______/  |__| \__| |_______|    \______||__|     |_______/
+
+\*--------------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+
+    root            "";
+    case            "";
+    instance        "";
+    local           "";
+
+    class           dictionary;
+    object          controlDict;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application simpleFoam;
+
+startFrom       latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         3000;
+
+deltaT          1;
+
+writeControl    timeStep;
+
+writeInterval   500;
+
+purgeWrite      0;
+
+//writeFormat     binary;
+writeFormat     ascii;
+
+writePrecision  7;
+
+writeCompression uncompressed;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable yes;
+
+functions{
+
+    forces
+        {
+            type forces;
+            functionObjectLibs ( "libforces.so" );
+            outputControl timeStep;
+            timeInterval 1;
+            log yes;
+            patches ( Aircraft );
+            rhoName rhoInf; // Indicates incompressible
+            rhoInf 1; // Redundant for incompressible
+            liftDir (0 0 1);
+            dragDir (1 0 0);
+            CofR (0.72 0 0); //CofG on the fuselage
+            pitchAxis (0 1 0);
+            magUInf 15;
+            lRef 1.42; // Mean chord length
+            Aref 0.75; // Reference Span Area
+        }
+
+    forceCoeffs1
+        {
+            type forceCoeffs;
+            functionObjectLibs ( "libforces.so" );
+            outputControl timeStep;
+            timeInterval 1;
+            log yes;
+            patches ( Aircraft );
+            rhoName rhoInf; // Indicates incompressible
+            rhoInf 1; // Redundant for incompressible
+            liftDir (0 0 1);
+            dragDir (1 0 0);
+            CofR (0.72 0 0); //CofG on the fuselage
+            pitchAxis (0 1 0);
+            magUInf 15;
+            lRef 1.42; // Mean chord length
+            Aref 0.75; // Reference Span Area˚
+        }
+};
+// ************************************************************************* //
