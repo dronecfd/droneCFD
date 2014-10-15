@@ -8,7 +8,7 @@ datadir = 'data'
 package_data = [ (d, [path.join(d, f) for f in files]) for d,folders,files in walk(datadir)]
 setup(
 name='droneCFD',
-version='0.1.0',
+version='0.1.1',
 description='A virtual wind tunnel based on OpenFOAM and PyFOAM',
 long_description='Please see dronecfd.com for more information',
 url='http://www.dronecfd.com',
