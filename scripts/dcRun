@@ -40,7 +40,7 @@ for aoa in args.aoa:
 
 
     bcs = {'vhigh':.1, 'high':0.15, 'medium':0.3001, 'low':0.45, 'vlow':0.60}
-    mesh = Meshing.mesher(case.dir, model, baseCellSize=bcs[args.resolution], parserArgs=args)
+    mesh = Meshing.mesher(case.dir, model, nprocs=6, baseCellSize=bcs[args.resolution], parserArgs=args)
     mesh.blockMesh()
     mesh.snappyHexMesh()
 

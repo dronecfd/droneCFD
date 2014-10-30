@@ -121,8 +121,9 @@ class mesher():
         self.snappyHexMeshDict['castellatedMeshControls']['refinementRegions']['downwindbox']={}
         self.snappyHexMeshDict['castellatedMeshControls']['refinementRegions']['downwindbox']['mode']='inside'
         self.snappyHexMeshDict['castellatedMeshControls']['refinementRegions']['downwindbox']['levels'] = [[1,4]]
-
-
+        self.snappyHexMeshDict['castellatedMeshControls']['locationInMesh'][0] = dwBox['min'][0]
+	self.snappyHexMeshDict['castellatedMeshControls']['locationInMesh'][1] = dwBox['min'][1]
+	self.snappyHexMeshDict['castellatedMeshControls']['locationInMesh'][2] = dwBox['min'][2]
 
         ## Next we add some refinement regions around the wing tips
         self.snappyHexMeshDict['geometry']['wingtip1'] = {}
