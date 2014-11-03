@@ -34,7 +34,7 @@ setup(
     'Programming Language :: Python :: 2.7',
     ],
     keywords='cfd wind tunnel uav uas suas',
-    install_requires=['XlsxWriter', 'numpy'],
+    install_requires=['XlsxWriter', 'numpy', 'numpy-stl'],
     packages=find_packages(),
     zip_safe = False,
     package_data={"droneCFD.data":data_files,},
