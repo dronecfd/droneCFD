@@ -13,12 +13,7 @@ __author__ = 'chrispaulson'
 import struct
 import numpy as np
 import math
-#
-# #TODO: Figure out what these values are
-# SCALE_INCH = 1.0
-# SCALE_CM = 1.0
-#
-# SQRT_TWO = 1.41421356237
+from stl import stl
 
 class SolidSTL(object):
 
