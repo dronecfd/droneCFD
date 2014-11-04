@@ -20,6 +20,8 @@ class solidSTL():
     def __init__(self, fp):
         print fp
         self.mesh = stl.StlMesh(fp)
+        self.boundingBox()
+        self.centerGeometry()
 
     def boundingBox(self):
         xmin = self.mesh.x.min()

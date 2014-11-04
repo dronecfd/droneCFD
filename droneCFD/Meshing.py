@@ -129,7 +129,7 @@ class mesher():
         self.snappyHexMeshDict['geometry']['wingtip1'] = {}
         wt1Box = self.snappyHexMeshDict['geometry']['wingtip1']
         wt1Box['type'] = 'searchableCylinder'
-        wt1Box['point1'] = self.stlSolid.yminPoint
+        wt1Box['point1'] = self.stlSolid.yminPoint.tolist()
         ## Next point is 6 meters downwind
         wt1Box['point2'] = [sum(x) for x in zip(self.stlSolid.yminPoint, [6,0,0])]
         wt1Box['radius'] = .2
@@ -142,7 +142,7 @@ class mesher():
         self.snappyHexMeshDict['geometry']['wingtip2'] = {}
         wt2Box = self.snappyHexMeshDict['geometry']['wingtip2']
         wt2Box['type'] = 'searchableCylinder'
-        wt2Box['point1'] = self.stlSolid.ymaxPoint
+        wt2Box['point1'] = self.stlSolid.ymaxPoint.tolist()
         ## Next point is 6 meters downwind
         wt2Box['point2'] = [sum(x) for x in zip(self.stlSolid.ymaxPoint, [6,0,0])]
         wt2Box['radius'] = .2
