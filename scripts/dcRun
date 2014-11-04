@@ -34,9 +34,9 @@ print args
 for aoa in args.aoa:
     case = Utilities.caseSetup('{0}/aoa_{1}'.format(args.caseFolder, aoa), parserArgs=args)
 
-    model = stlTools.SolidSTL(case.stlPath)
+    model = stlTools.solidSTL(case.stlPath)
     model.setaoa(aoa, units='degrees')
-    model.saveSTL(case.stlPath)
+    model.save(case.stlPath)
 
 
     bcs = {'vhigh':.1, 'high':0.15, 'medium':0.3001, 'low':0.45, 'vlow':0.60}

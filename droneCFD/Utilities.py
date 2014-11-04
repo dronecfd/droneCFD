@@ -11,7 +11,8 @@ __author__ = 'chrispaulson'
 
 import shutil
 import os
-import PyFoam.Basics.STLFile as pySTL
+# import PyFoam.Basics.STLFile as pySTL
+import stlTools
 import multiprocessing
 
 ## Utilities is responsible for setting up our test directory
@@ -78,19 +79,11 @@ class caseSetup():
 
         ## Now parse the STL file to double check that it's valid, we'll need this data later anyway
         print self.geo_base_path
-        stl_file = pySTL.STLFile(fName=self.geo_base_path)
-
         try:
-            self.patchinfo =  stl_file.patchInfo()
+            stl_file = stlTools.solidSTL(self.geo_base_path)
         except:
-            print 'Please make sure your STL file is in ascii format, hoping to add binary soon'
+            print 'droneCFD encountered an error with the STL file. Please check the file and try again'
             exit()
-        if len(self.patchinfo)>1:
-            print 'Make sure there is only one geometry in your STL file'
-            exit()
-        self.patchinfo = self.patchinfo[0]
-        self.stl = {'patchName':self.patchinfo['name'], 'bb_min':self.patchinfo['min'], 'bb_max':self.patchinfo['max']}
-        ## Finally, we can copy the STL file into place.
         shutil.copy(path, os.path.join(self.dir, self.triSurface))
         self.stlPath = os.path.join(self.dir, self.triSurface, os.path.basename(self.geo_base_path))
         #Rename the stl geometry to work with the OpenFoam Template
