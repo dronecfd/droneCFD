@@ -15,7 +15,7 @@ data_files = [path.relpath(file, datadir) for file in data_files]
 
 setup(
     name='droneCFD',
-    version='0.1.2',
+    version='0.1.3',
     description='A virtual wind tunnel based on OpenFOAM and PyFOAM',
     long_description='Please see dronecfd.com for more information',
     url='http://www.dronecfd.com',
