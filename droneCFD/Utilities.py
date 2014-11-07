@@ -71,7 +71,6 @@ class caseSetup():
 
     def setGeometry(self, path):
         self.geo_base_path = path
-        print
         ## Double check that this is actually a file
         if not os.path.isfile(self.geo_base_path):
             print 'Geometry missing... Exiting... '
@@ -81,14 +80,15 @@ class caseSetup():
         print self.geo_base_path
         try:
             stl_file = stlTools.solidSTL(self.geo_base_path)
+            stl_file.save(os.path.join(self.dir, self.triSurface, 'Aircraft_premod.stl'))
         except:
             print 'droneCFD encountered an error with the STL file. Please check the file and try again'
             exit()
-        shutil.copy(path, os.path.join(self.dir, self.triSurface))
-        self.stlPath = os.path.join(self.dir, self.triSurface, os.path.basename(self.geo_base_path))
+        #shutil.copy(path, os.path.join(self.dir, self.triSurface))
+        #self.stlPath = os.path.join(self.dir, self.triSurface, os.path.basename(self.geo_base_path))
         #Rename the stl geometry to work with the OpenFoam Template
-        shutil.move(self.stlPath, os.path.join(self.dir, self.triSurface, 'Aircraft.stl'))
-        self.stlPath = os.path.join(self.dir, self.triSurface, 'Aircraft.stl')
+        #shutil.move(self.stlPath, os.path.join(self.dir, self.triSurface, 'Aircraft.stl'))
+        self.stlPath = os.path.join(self.dir, self.triSurface, 'Aircraft_premod.stl')
 
 
 class parallelUtilities():
