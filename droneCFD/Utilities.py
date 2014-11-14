@@ -77,10 +77,8 @@ class caseSetup():
             exit()
 
         ## Now parse the STL file to double check that it's valid, we'll need this data later anyway
-        print self.geo_base_path
         try:
             stl_file = stlTools.solidSTL(self.geo_base_path)
-            stl_file.save(os.path.join(self.dir, self.triSurface, 'Aircraft_premod.stl'))
         except:
             print 'droneCFD encountered an error with the STL file. Please check the file and try again'
             exit()
@@ -88,7 +86,7 @@ class caseSetup():
         #self.stlPath = os.path.join(self.dir, self.triSurface, os.path.basename(self.geo_base_path))
         #Rename the stl geometry to work with the OpenFoam Template
         #shutil.move(self.stlPath, os.path.join(self.dir, self.triSurface, 'Aircraft.stl'))
-        self.stlPath = os.path.join(self.dir, self.triSurface, 'Aircraft_premod.stl')
+        self.stlPath = os.path.join(self.dir, self.triSurface, 'Aircraft.stl')
 
 
 class parallelUtilities():

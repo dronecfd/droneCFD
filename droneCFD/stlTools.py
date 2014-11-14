@@ -14,11 +14,11 @@ import struct
 import numpy as np
 import math
 from stl import stl as stl
-
+import os
 
 class solidSTL():
     def __init__(self, fp):
-        print fp
+        print 'init opening file: ', fp
         self.mesh = stl.StlMesh(fp)
         self.boundingBox()
         self.centerGeometry()
@@ -52,7 +52,10 @@ class solidSTL():
         self.mesh.data['vectors'] = self.mesh.data['vectors'] * [x,y,z]
 
     def save(self, fp):
-        self.mesh.save(fp, mode=2, update_normals=True)
+        print 'Saving file to: ', fp
+        print 'pre-save: is mesh a file: ', os.path.isfile(fp)
+        self.mesh.save(fp, fh=open(fp,'wb'),mode=2, update_normals=True)
+        print 'post-save: is mesh a file: ', os.path.isfile(fp)
 
     def setaoa(self, aoa, units="degrees"):
         self.rotate(y=aoa, units=units)

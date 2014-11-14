@@ -33,8 +33,7 @@ print args
 
 for aoa in args.aoa:
     case = Utilities.caseSetup('{0}/aoa_{1}'.format(args.caseFolder, aoa), parserArgs=args)
-
-    model = stlTools.solidSTL(case.stlPath)
+    model = stlTools.solidSTL(case.geo_base_path)
     model.setaoa(aoa, units='degrees')
     model.save(case.stlPath)
 
